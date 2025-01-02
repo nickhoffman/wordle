@@ -1,22 +1,29 @@
 import React from "react"
 
-function Guesser({ addGuess }) {
+function Guesser({ addGuess, allowGuessing }) {
   const [guess, setGuess] = React.useState("")
-  const validGuessPattern = /^[A-Z]+$/
+  const validGuessPattern = /^[A-Z]*$/
+  const maxGuessLength = 5
 
   function handleSubmit(event) {
     event.preventDefault()
-    if (guess.length !== 5) {
-      console.log("handleSubmit() Length != 5. Aborting.")
+    console.log(`handleSubmit() guess = ${guess}`)
+    if (guess.length !== maxGuessLength) {
+      console.log(`handleSubmit() Length != ${maxGuessLength}. Aborting.`)
       return
     }
 
-    console.log({ guess: guess })
     addGuess(guess)
     setGuess("")
   }
 
   function handleTyping(event) {
+    if (!allowGuessing) {
+      console.log("handleTyping() Disabled. Aborting.")
+      event.preventDefault()
+      return
+    }
+
     const newGuess = event.target.value.toUpperCase()
 
     if (!validGuessPattern.test(newGuess)) {
