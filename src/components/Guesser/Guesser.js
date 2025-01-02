@@ -1,6 +1,6 @@
 import React from "react"
 
-function Guesser() {
+function Guesser({ addGuess }) {
   const [guess, setGuess] = React.useState("")
   const validGuessPattern = /^[A-Z]+$/
 
@@ -12,6 +12,7 @@ function Guesser() {
     }
 
     console.log({ guess: guess })
+    addGuess(guess)
     setGuess("")
   }
 
